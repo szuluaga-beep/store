@@ -1,2 +1,2 @@
-export 'screens/categories_screen.dart';
+export 'screens/screens.dart';
 export 'providers/categories_provider.dart';

@@ -14,16 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => CategoryProvider(),
-        ),
-      ],
-      child: MaterialApp(
+      providers: [ChangeNotifierProvider(create: (_) => CategoryProvider())],
+      child: MaterialApp.router(
+        routerConfig: appRouter,
         title: 'Store exito',
         theme: AppTheme().getTheme(),
         debugShowCheckedModeBanner: false,
-        home: CategoriesScreen(),
       ),
     );
   }

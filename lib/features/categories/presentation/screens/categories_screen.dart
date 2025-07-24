@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:store/features/categories/presentation/presentation.dart';
@@ -39,9 +40,7 @@ class CategoriesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final category = provider.categories[index];
                 return GestureDetector(
-                  onTap: (){
-                    print(category.id);
-                  },
+                  onTap: () => context.push("/category/${category.id}"),
                   child: CategoryCard(category: category),
                 );
               },
