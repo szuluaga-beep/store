@@ -47,3 +47,7 @@ categorías, visualizar detalles y navegar por un catálogo dinámico.
 ---
 
 ¡Disfruta explorando la tienda!
+
+![img.png](img.png)
+
+![img_1.png](img_1.png)
