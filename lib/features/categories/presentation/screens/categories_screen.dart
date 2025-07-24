@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:store/features/categories/presentation/presentation.dart';
+import 'package:store/features/categories/presentation/widgets/category_card.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -33,28 +34,15 @@ class CategoriesScreen extends StatelessWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 5,
               crossAxisSpacing: 20,
+              physics: const BouncingScrollPhysics(),
+              itemCount: provider.categories.length,
               itemBuilder: (context, index) {
                 final category = provider.categories[index];
-                return Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.network(
-                        category.image,
-                        fit: BoxFit.cover,
-                        height: 100,
-                        width: double.infinity,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          category.title,
-                          style: const TextStyle(fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
+                return GestureDetector(
+                  onTap: (){
+                    print(category.id);
+                  },
+                  child: CategoryCard(category: category),
                 );
               },
             ),
