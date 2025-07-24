@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store/config/config.dart';
 import 'package:store/features/categories/presentation/presentation.dart';
+import 'package:store/features/categories/presentation/providers/cart_provider.dart';
 import 'package:store/features/categories/presentation/providers/products_provider.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,

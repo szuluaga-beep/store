@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:store/features/categories/domain/domain.dart';
+import 'package:store/features/categories/presentation/providers/cart_provider.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -10,9 +12,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -29,16 +29,7 @@ class ProductCard extends StatelessWidget {
               style: TextStyle(fontSize: 18, color: Colors.green),
             ),
             SizedBox(height: 10),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Implement the action for the button, e.g., add to cart
-              },
-              icon: Icon(Icons.add_shopping_cart),
-              label: Text('Agregar'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 40), // Full width button
-              ),
-            ),
+            _AddButton(product: product),
           ],
         ),
       ),
@@ -72,6 +63,63 @@ class _ImageViewer extends StatelessWidget {
         fadeInDuration: const Duration(milliseconds: 200),
         image: NetworkImage(images.first),
         placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
+      ),
+    );
+  }
+}
+
+class _AddButton extends StatelessWidget {
+  final Product product;
+
+  const _AddButton({ required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    var isInCart = context.watch<CartProvider>();
+
+    if (isInCart.isInCart(product)) {
+      return Column(
+        children: [
+          ElevatedButton.icon(
+            onPressed: () {
+              var cart = context.read<CartProvider>();
+              cart.addToCart(product);
+            },
+            icon: Icon(Icons.add),
+            label: Text('Add'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 40), // Full width button
+            ),
+          ),
+          SizedBox(width: 10),
+          Text(
+            'Quantity: ${isInCart.getItemCount(product)}',
+            style: TextStyle(fontSize: 16),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              var cart = context.read<CartProvider>();
+              cart.removeFromCart(product);
+            },
+            icon: Icon(Icons.remove),
+            label: Text('Remove'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 40), // Full width button
+            ),
+          ),
+        ],
+      );
+    }
+
+    return ElevatedButton.icon(
+      onPressed: () {
+        var cart = context.read<CartProvider>();
+        cart.addToCart(product);
+      },
+      icon: Icon(Icons.add_shopping_cart),
+      label: Text('Agregar'),
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(double.infinity, 40), // Full width button
       ),
     );
   }
